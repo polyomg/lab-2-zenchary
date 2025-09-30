@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Thêm sản phẩm (pagination)</title>
+</head>
+<body>
+<form action="/poly/them" method="get">
+  <label>Page size: </label>
+  <input name="pageSize" th:value="${pageSize}">
+  <label>Page: </label>
+  <input name="page" th:value="${page}">
+  <button>Go</button>
+</form>
+
+<ul>
+  <li>Total items: <span th:text="${totalItems}">0</span></li>
+  <li>Page/Total: <span th:text="${page}">1</span>/<span th:text="${totalPages}">1</span></li>
+</ul>
+
+<ul>
+  <li th:each="p : ${items}">Name: <span th:text="${p.name}">[name]</span> - Price: <span th:text="${p.price}">[price]</span></li>
+</ul>
+
+<div>
+  <span>Page: </span>
+  <a th:each="i : ${#numbers.sequence(1, totalPages)}"
+     th:href="@{/poly/them(pageSize=${pageSize}, page=${i})}"
+     th:text="${i}"
+     th:style="${i} == ${page} ? 'font-weight:bold' : ''">1</a>
+</div>
+</body>
+</html>
